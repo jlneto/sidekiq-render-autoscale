@@ -16,7 +16,7 @@ GEM
       excon
       moneta
       multi_json (>= 1.9.2)
-    minitest (5.13.0)
+    minitest (5.16.2)
     moneta (1.0.0)
     multi_json (1.14.1)
     platform-api (3.3.0)
@@ -37,9 +37,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 2.0)
-  minitest (~> 5.12)
-  rake (~> 12.0)
+  bundler
+  minitest
+  rake
   sidekiq-heroku-autoscale!
 
 BUNDLED WITH
