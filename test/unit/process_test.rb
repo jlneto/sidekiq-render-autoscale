@@ -327,8 +327,10 @@ describe 'Sidekiq::HerokuAutoscale::Process' do
     end
 
     it 'fetches total dynos for a process type via PlatformAPI' do
-      @subject.client.formation.stub(:list, JSON.parse(File.read("#{ FIXTURES_PATH }/formation_list.json"))) do
-        assert_equal 2, @subject.fetch_dyno_count
+      @subject.client.services.stub(:list, JSON.parse(File.read("#{ FIXTURES_PATH }/formation_list.json"))) do
+        @subject.client.services.stub(:find, JSON.parse(File.read("#{ FIXTURES_PATH }/find_worker.json"))) do
+          assert_equal 2, @subject.fetch_dyno_count
+        end
       end
     end
 
@@ -346,12 +348,13 @@ describe 'Sidekiq::HerokuAutoscale::Process' do
     end
 
     it 'sets total dynos for a process type via PlatformAPI, and syncs count' do
-      @subject.client.formation.stub(:update, nil) do
-        assert_equal 2, @subject.set_dyno_count!(2)
-
-        assert_equal 0, @subject2.dynos
-        @subject2.sync_attributes
-        assert_equal 2, @subject2.dynos
+      @subject.client.services.stub(:list, JSON.parse(File.read("#{ FIXTURES_PATH }/formation_list.json"))) do
+        @subject.client.services.stub(:scale, true) do
+          assert_equal 2, @subject.set_dyno_count!(2)
+          assert_equal 0, @subject2.dynos
+          @subject2.sync_attributes
+          assert_equal 2, @subject2.dynos
+        end
       end
     end
 

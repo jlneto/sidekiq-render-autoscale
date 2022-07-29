@@ -1,7 +1,7 @@
 require 'bundler/setup'
 Bundler.require(:default, :test)
 
-require 'minitest/pride'
+# require 'minitest/pride'
 require 'minitest/autorun'
 require 'sidekiq-heroku-autoscale'
 
@@ -37,9 +37,21 @@ class TestClient
     def update(params)
       raise 'not implemented'
     end
+
+    def find(params)
+      raise 'not implemented'
+    end
+
+    def scale(params)
+      raise 'not implemented'
+    end
   end
 
   def formation
+    @formation ||= List.new
+  end
+
+  def services
     @formation ||= List.new
   end
 end

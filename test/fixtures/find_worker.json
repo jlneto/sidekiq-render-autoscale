@@ -1,0 +1,16 @@
+[{
+  "app": {
+    "id": "ab12a082-7fd8-453c-ad60-a4108b41885f",
+    "name": "awesomesauce"
+  },
+  "command": "bundle exec sidekiq -t 25",
+  "created_at": "2017-09-21T04:02:25Z",
+  "id": "6c581170-fa7a-44c3-84fa-ec5a907e460a",
+  "type": "sidekiq",
+  "serviceDetails": {
+    "numInstances": 2
+  },
+  "quantity": 2,
+  "size": "Hobby",
+  "updated_at": "2019-08-19T01:30:48Z"
+}]

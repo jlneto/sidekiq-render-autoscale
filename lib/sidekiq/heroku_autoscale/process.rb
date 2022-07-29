@@ -183,10 +183,13 @@ module Sidekiq
       # gets a live dyno count from Heroku
       def fetch_dyno_count
         if @client
-          @client.formation.list(app_name)
-            .select { |item| item['type'] == name }
-            .map { |item| item['quantity'] }
-            .reduce(0, &:+)
+          # @client.formation.list(app_name)
+          #   .select { |item| item['type'] == name }
+          #   .map { |item| item['quantity'] }
+          #   .reduce(0, &:+)
+          # Count instances on render service
+          service_id = @client.services.list( filters: { name: @app_name }).first.to_h['id']
+          @client.services.find(service_id).first.to_h['serviceDetails']['numInstances']
         else
           @dynos
         end
@@ -198,7 +201,12 @@ module Sidekiq
       # sets the live dyno count on Heroku
       def set_dyno_count!(count)
         ::Sidekiq.logger.info("SCALE to #{ count } dynos")
-        @client.formation.update(app_name, name, { quantity: count }) if @client
+        if @client
+          # @client.formation.update(app_name, name, { quantity: count })
+          # Render Scale Api
+          service_id = @client.services.list( filters: { name: @app_name }).first.to_h['id']
+          @client.services.scale(service_id, num_instances: count)
+        end
         set_attributes(dynos: count, quieted_to: nil, quieted_at: nil, history_at: Time.now.utc)
         count
       rescue StandardError => e

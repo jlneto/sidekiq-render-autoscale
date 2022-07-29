@@ -1,4 +1,4 @@
-require 'platform-api'
+require 'render_api'
 
 module Sidekiq
   module HerokuAutoscale
@@ -14,7 +14,7 @@ module Sidekiq
         @app_name = config[:app_name] || ENV['SIDEKIQ_HEROKU_AUTOSCALE_APP']
         @throttle = config[:throttle] || 10
         @history = config[:history] || 60 * 60 # 1 hour
-        @client = api_token ? PlatformAPI.connect_oauth(api_token) : nil
+        @client = api_token ? RenderAPI.client(api_token) : nil
 
         @processes_by_name = {}
         @processes_by_queue = {}
