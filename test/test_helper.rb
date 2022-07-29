@@ -42,7 +42,15 @@ class TestClient
       raise 'not implemented'
     end
 
-    def scale(params)
+    def scale(service_id, scale)
+      raise 'not implemented'
+    end
+
+    def suspend(service_id)
+      raise 'not implemented'
+    end
+
+    def resume(service_id)
       raise 'not implemented'
     end
   end

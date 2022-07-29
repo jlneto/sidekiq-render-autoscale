@@ -205,7 +205,19 @@ module Sidekiq
           # @client.formation.update(app_name, name, { quantity: count })
           # Render Scale Api
           service_id = @client.services.list( filters: { name: @app_name }).first.to_h['id']
-          @client.services.scale(service_id, num_instances: count)
+          is_suspended = @client.services.find(service_id).first.to_h['suspended'] == 'suspended'
+          if is_suspended and count > 0
+            if count > 0
+              @client.services.resume(service_id)
+              @client.services.scale(service_id, num_instances: count)
+            end
+          else
+            if count == 0
+              @client.services.suspend(service_id)
+            else
+              @client.services.scale(service_id, num_instances: count)
+            end
+          end
         end
         set_attributes(dynos: count, quieted_to: nil, quieted_at: nil, history_at: Time.now.utc)
         count
