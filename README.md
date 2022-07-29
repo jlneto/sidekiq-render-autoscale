@@ -2,7 +2,7 @@
 
 This [Sidekiq](https://github.com/mperham/sidekiq) plugin allows Render dynos to be started, stopped, and scaled based on job workload. Why? Because running non-stop Sidekiq dynos on Render can rack up unnecessary costs for apps with modest background processing needs.
 
-This is a self-acknowledged rewrite of the [autoscaler](https://github.com/JustinLove/autoscaler) project. While this plugin borrows many foundation concepts from _autoscaler_, it rewrites core operations to address several logistical concerns and enable reporting through a web UI.
+This is a adaptation of the [sidekiq-heroku-autoscale](https://github.com/gmac/sidekiq-heroku-autoscale) project to work with render. 
 
 ![Web UI](web-preview.png)
 
