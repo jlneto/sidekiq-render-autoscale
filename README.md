@@ -60,7 +60,7 @@ app_name: test-app
 processes:
   worker:
     system:
-      watch_queues: *
+      watch_queues: '*'
       include_retrying: true
       include_scheduled: false
     scale:
