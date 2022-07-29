@@ -1,5 +1,5 @@
 module Sidekiq
-  module HerokuAutoscale
+  module RenderAutoscale
 
     class Middleware
       def initialize(app)

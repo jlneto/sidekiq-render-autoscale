@@ -1,13 +1,13 @@
-require 'sidekiq/heroku_autoscale/heroku_app'
-require 'sidekiq/heroku_autoscale/middleware'
-require 'sidekiq/heroku_autoscale/poll_interval'
-require 'sidekiq/heroku_autoscale/process'
-require 'sidekiq/heroku_autoscale/queue_system'
-require 'sidekiq/heroku_autoscale/scale_strategy'
-require 'sidekiq/heroku_autoscale/version'
+require 'sidekiq/render_autoscale/render_app'
+require 'sidekiq/render_autoscale/middleware'
+require 'sidekiq/render_autoscale/poll_interval'
+require 'sidekiq/render_autoscale/process'
+require 'sidekiq/render_autoscale/queue_system'
+require 'sidekiq/render_autoscale/scale_strategy'
+require 'sidekiq/render_autoscale/version'
 
 module Sidekiq
-  module HerokuAutoscale
+  module RenderAutoscale
 
     class << self
       def app
@@ -16,9 +16,9 @@ module Sidekiq
 
       def init(options)
         options = options.transform_keys(&:to_sym)
-        @app = HerokuApp.new(**options)
+        @app = RenderApp.new(**options)
 
-        ::Sidekiq.logger.warn('Heroku platform API is not configured for Sidekiq::HerokuAutoscale') unless @app.live?
+        ::Sidekiq.logger.warn('Render platform API is not configured for Sidekiq::RenderAutoscale') unless @app.live?
 
         # configure sidekiq queue server
         ::Sidekiq.configure_server do |config|

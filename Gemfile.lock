@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    sidekiq-heroku-autoscale (0.0.1)
+    sidekiq-render-autoscale (0.0.1)
       render_api
       sidekiq (>= 5.0)
 
@@ -53,7 +53,7 @@ DEPENDENCIES
   bundler
   minitest
   rake
-  sidekiq-heroku-autoscale!
+  sidekiq-render-autoscale!
 
 BUNDLED WITH
    2.3.19

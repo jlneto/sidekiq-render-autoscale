@@ -1,12 +1,12 @@
 require 'test_helper'
 require 'yaml'
 
-describe 'HerokuApp' do
+describe 'RenderApp' do
   before do
     Sidekiq.redis {|c| c.flushdb }
-    ENV['SIDEKIQ_HEROKU_AUTOSCALE_API_TOKEN'] = 'humd1ng3r'
-    ENV['SIDEKIQ_HEROKU_AUTOSCALE_APP'] = 'testing-app'
-    @subject = ::Sidekiq::HerokuAutoscale::HerokuApp
+    ENV['SIDEKIQ_RENDER_AUTOSCALE_API_TOKEN'] = 'humd1ng3r'
+    ENV['SIDEKIQ_RENDER_AUTOSCALE_APP'] = 'testing-app'
+    @subject = ::Sidekiq::RenderAutoscale::RenderApp
   end
 
   describe 'new' do

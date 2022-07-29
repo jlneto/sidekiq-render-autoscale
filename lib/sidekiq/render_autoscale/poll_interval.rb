@@ -1,5 +1,5 @@
 module Sidekiq
-  module HerokuAutoscale
+  module RenderAutoscale
 
     class PollInterval
       def initialize(method_name, before_update: 0, after_update: 0)

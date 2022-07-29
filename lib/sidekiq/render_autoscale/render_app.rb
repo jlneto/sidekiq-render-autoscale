@@ -1,17 +1,17 @@
 require 'render_api'
 
 module Sidekiq
-  module HerokuAutoscale
+  module RenderAutoscale
 
-    class HerokuApp
+    class RenderApp
       attr_reader :app_name, :throttle, :history
 
       # Builds process managers based on configuration (presumably loaded from YAML)
       def initialize(config)
         config = JSON.parse(JSON.generate(config), symbolize_names: true)
 
-        api_token = config[:api_token] || ENV['SIDEKIQ_HEROKU_AUTOSCALE_API_TOKEN']
-        @app_name = config[:app_name] || ENV['SIDEKIQ_HEROKU_AUTOSCALE_APP']
+        api_token = config[:api_token] || ENV['SIDEKIQ_RENDER_AUTOSCALE_API_TOKEN']
+        @app_name = config[:app_name] || ENV['SIDEKIQ_RENDER_AUTOSCALE_APP']
         @throttle = config[:throttle] || 10
         @history = config[:history] || 60 * 60 # 1 hour
         @client = api_token ? RenderAPI.client(api_token) : nil
@@ -31,17 +31,17 @@ module Sidekiq
           @processes_by_name[name.to_s] = process
 
           process.queue_system.watch_queues.each do |queue_name|
-            # a queue may only be managed by a single heroku process type (to avoid scaling conflicts)
+            # a queue may only be managed by a single render process type (to avoid scaling conflicts)
             # thus, raise an error over duplicate queue names or when "*" isn't exclusive
             if @processes_by_queue.key?(queue_name) || @processes_by_queue.key?('*') || (queue_name == '*' && @processes_by_queue.keys.any?)
-              raise ArgumentError, 'watched queues must be exclusive to a single Heroku process type'
+              raise ArgumentError, 'watched queues must be exclusive to a single Render process type'
             end
             @processes_by_queue[queue_name] = process
           end
         end
       end
 
-      # checks if there's a live Heroku client setup
+      # checks if there's a live Render client setup
       def live?
         !!@client
       end

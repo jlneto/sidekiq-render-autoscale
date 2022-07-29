@@ -1,9 +1,9 @@
 require 'test_helper'
 
-describe 'Sidekiq::HerokuAutoscale::QueueSystem' do
+describe 'Sidekiq::RenderAutoscale::QueueSystem' do
   before do
     Sidekiq.redis {|c| c.flushdb }
-    @subject = ::Sidekiq::HerokuAutoscale::QueueSystem
+    @subject = ::Sidekiq::RenderAutoscale::QueueSystem
   end
 
   it 'initializes with options' do

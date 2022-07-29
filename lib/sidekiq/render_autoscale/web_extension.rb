@@ -1,7 +1,7 @@
 require 'rack/file'
 
 module Sidekiq
-  module HerokuAutoscale
+  module RenderAutoscale
     module WebExtension
 
       WEB_PATH = File.join(File.expand_path('..', __FILE__), 'web')
@@ -13,7 +13,7 @@ module Sidekiq
 
       def self.registered(web)
         web.get '/dynos' do
-          if app = ::Sidekiq::HerokuAutoscale.app
+          if app = ::Sidekiq::RenderAutoscale.app
             app.ping!
             @dyno_stats = app.stats
             puts @dyno_stats
@@ -22,7 +22,7 @@ module Sidekiq
         end
 
         web.get '/dynos/stats' do
-          if app = ::Sidekiq::HerokuAutoscale.app
+          if app = ::Sidekiq::RenderAutoscale.app
             app.ping!
           end
           json(stats: app ? app.stats : {})

@@ -1,9 +1,9 @@
 require 'test_helper'
 
-describe 'Sidekiq::HerokuAutoscale::ScaleStrategy' do
+describe 'Sidekiq::RenderAutoscale::ScaleStrategy' do
   before do
     @sys = TestQueueSystem.new
-    @subject = ::Sidekiq::HerokuAutoscale::ScaleStrategy
+    @subject = ::Sidekiq::RenderAutoscale::ScaleStrategy
   end
 
   it 'call_configures_via_mode_setting' do

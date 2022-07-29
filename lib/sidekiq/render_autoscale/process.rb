@@ -1,5 +1,5 @@
 module Sidekiq
-  module HerokuAutoscale
+  module RenderAutoscale
 
     class Process
       WAKE_THROTTLE = PollInterval.new(:wait_for_update!, before_update: 2)
@@ -133,7 +133,7 @@ module Sidekiq
         update!.zero?
       end
 
-      # update the process with live dyno count from Heroku,
+      # update the process with live dyno count from Render,
       # and then reassess workload and scale transitions.
       # this method shouldn't be called directly... just ping! it.
       def update!(current=nil, target=nil)
@@ -180,7 +180,7 @@ module Sidekiq
         current
       end
 
-      # gets a live dyno count from Heroku
+      # gets a live dyno count from Render
       def fetch_dyno_count
         if @client
           # @client.formation.list(app_name)
@@ -194,11 +194,11 @@ module Sidekiq
           @dynos
         end
       rescue StandardError => e
-        ::Sidekiq::HerokuAutoscale.exception_handler.call(e)
+        ::Sidekiq::RenderAutoscale.exception_handler.call(e)
         0
       end
 
-      # sets the live dyno count on Heroku
+      # sets the live dyno count on Render
       def set_dyno_count!(count)
         ::Sidekiq.logger.info("SCALE to #{ count } dynos")
         if @client
@@ -210,7 +210,7 @@ module Sidekiq
         set_attributes(dynos: count, quieted_to: nil, quieted_at: nil, history_at: Time.now.utc)
         count
       rescue StandardError => e
-        ::Sidekiq::HerokuAutoscale.exception_handler.call(e)
+        ::Sidekiq::RenderAutoscale.exception_handler.call(e)
         @dynos
       end
 

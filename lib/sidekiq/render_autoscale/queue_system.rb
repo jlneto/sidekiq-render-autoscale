@@ -1,7 +1,7 @@
 require 'sidekiq/api'
 
 module Sidekiq
-  module HerokuAutoscale
+  module RenderAutoscale
 
     class QueueSystem
       ALL_QUEUES = '*'.freeze
@@ -19,7 +19,7 @@ module Sidekiq
       end
 
       # number of dynos (process instances) running sidekiq
-      # this may include one-or-more instances of one-or-more heroku process types
+      # this may include one-or-more instances of one-or-more render process types
       # (though they should all be one process type if setup validation was observed)
       def dynos
         sidekiq_processes.size
@@ -60,8 +60,8 @@ module Sidekiq
         total_work > 0
       end
 
-      # When scaling down workers, heroku stops the one with the highest number...
-      # from https://stackoverflow.com/questions/25215334/scale-down-specific-heroku-worker-dynos
+      # When scaling down workers, render stops the one with the highest number...
+      # from https://stackoverflow.com/questions/25215334/scale-down-specific-render-worker-dynos
       def quietdown!(scale)
         quieted = false
         # processes have hostnames formatted as "worker.1", "worker.2", "sidekiq.1", etc...

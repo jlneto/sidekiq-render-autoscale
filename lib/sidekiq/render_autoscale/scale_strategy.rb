@@ -1,5 +1,5 @@
 module Sidekiq
-  module HerokuAutoscale
+  module RenderAutoscale
 
     class ScaleStrategy
       attr_accessor :mode, :max_dynos, :min_dynos, :workers_per_dyno, :min_factor
